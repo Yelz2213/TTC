@@ -18,11 +18,11 @@ public class Player : MonoBehaviour
     bool isFirstTime;
     void Start()
     {
-        
     }
 
     void Update()
     {
+
         currentPosition = this.transform.position;
     }
 }

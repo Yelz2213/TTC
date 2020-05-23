@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.UI;
+using UnityEngine.UI;
 
 public class UIcontroller : MonoBehaviour
 {
     public GameObject Inventory;
-    bool pause = false;
+    bool isPause = false;
     public Player player;
 
     private void Start()
@@ -17,7 +17,6 @@ public class UIcontroller : MonoBehaviour
     public void openInventory()
     {
         Inventory.SetActive(true);
-
         pauseGame();
     }
 
@@ -29,16 +28,16 @@ public class UIcontroller : MonoBehaviour
 
     public void pauseGame()
     {
-        if (pause != true)
+        if (isPause != true)
         {
             Time.timeScale = 0;
             player.currentAudioListener.enabled = false;
-            pause = true;
+            isPause = true;
         } else
         {
             Time.timeScale = 1;
             player.currentAudioListener.enabled = true;
-            pause = false;
+            isPause = false;
         }
     }
 }
