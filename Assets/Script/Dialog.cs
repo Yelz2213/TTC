@@ -3,56 +3,52 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Dialog : MonoBehaviour
+public class Dialog : Interactable
 {
     public TextMeshProUGUI textDisplay;
     public string[] sentences;
-    private int index;
+    public int index;
     public float typingSpeed;
-
+    public GameObject textbackground;
     public GameObject continueButton;
 
-    private void Start()
-    {
+    public Player player;
 
-        //StartCoroutine(Type());
+    public override void Interact()
+    {
+        Debug.Log(".....");
+        base.Interact();
+        StartCoroutine(Type());
     }
 
-    private void Update()
-    {
-        if(textDisplay.text == sentences[index])
-        {
-            continueButton.SetActive(true);
 
-        }
-    }
 
     IEnumerator Type()
     {
+        textbackground.SetActive(true);
+        textDisplay.enabled = true;
         foreach (char letter in sentences[index].ToCharArray()) {
             textDisplay.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
-
     }
 
     public void NextSentence()
     {
-
+        player.isInteracting = true;
         continueButton.SetActive(false);
-
         if (index < sentences.Length - 1)
         {
             index++;
             textDisplay.text = "";
             StartCoroutine(Type());
-        }
-        else
+        } else
         {
             textDisplay.text = "";
             continueButton.SetActive(false);
-        }
-
+            textbackground.SetActive(false);
+            player.isInteracting = false;
         }
     }
+}
    

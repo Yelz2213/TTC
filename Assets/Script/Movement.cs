@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class Movement : MonoBehaviour
 {
@@ -25,25 +26,28 @@ public class Movement : MonoBehaviour
         isIdle = true;
         isRunning = false;
 
-
         myAgent = GetComponent<NavMeshAgent>();
         m_Animator = gameObject.GetComponent<Animator>();
         walk = GetComponent<AudioSource>();
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) {
-            Ray myRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray myRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hitInfo;
 
-            if (Physics.Raycast(myRay, out hitInfo, 100, whatCanBeClickOn)) {
-                //Debug.Log(hitInfo.point);
-                myAgent.SetDestination(hitInfo.point);
+                if (Physics.Raycast(myRay, out hitInfo, 100, whatCanBeClickOn))
+                {
+                    //Debug.Log(hitInfo.point);
+                    myAgent.SetDestination(hitInfo.point);
+                }
+                RemoveFocus();
             }
-            RemoveFocus();
         }
 
         if(target != null)

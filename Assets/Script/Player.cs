@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
@@ -18,26 +19,29 @@ public class Player : MonoBehaviour
     public AudioListener startAudioListener;
 
     public Movement movement;
-
-    bool isFirstTime;
+    public bool isInteracting = false;
+    
     void Start()
     {
     }
 
-    void Update()
+    public void Update()
     {
         currentPosition = this.transform.position;
-        if (Input.GetMouseButtonDown(1))
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            Ray myRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-
-            if (Physics.Raycast(myRay, out hitInfo, 100))
+            if (Input.GetMouseButtonDown(1))
             {
-                Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
-                if(interactable != null)
+                Ray myRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hitInfo;
+
+                if (Physics.Raycast(myRay, out hitInfo, 100))
                 {
-                    SetFocus(interactable);
+                    Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
+                    if (interactable != null)
+                    {
+                        SetFocus(interactable);
+                    }
                 }
             }
         }
@@ -45,7 +49,7 @@ public class Player : MonoBehaviour
 
     void SetFocus(Interactable newFocus)
     {
-        if ( newFocus != focus)
+        if (newFocus != focus)
         {
             if (focus != null)
             {
@@ -55,8 +59,5 @@ public class Player : MonoBehaviour
             movement.FollowTarget(newFocus);
         }
         newFocus.OnFocused(transform);
-        
     }
-
-    
 }
