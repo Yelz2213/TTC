@@ -7,12 +7,15 @@ public class Movement : MonoBehaviour
 {
     public LayerMask whatCanBeClickOn;
     private NavMeshAgent myAgent;
+    public Transform target;
 
     public Animator m_Animator;
     bool isWalk;
     bool isIdle;
     bool isRunning;
     bool isPlaying;
+
+    public Player player;
 
     AudioSource walk;
     // Start is called before the first frame update
@@ -37,11 +40,20 @@ public class Movement : MonoBehaviour
             RaycastHit hitInfo;
 
             if (Physics.Raycast(myRay, out hitInfo, 100, whatCanBeClickOn)) {
+                //Debug.Log(hitInfo.point);
                 myAgent.SetDestination(hitInfo.point);
             }
+            RemoveFocus();
         }
-        Action();
 
+        if(target != null)
+        {
+            //Debug.Log(target.position);
+            myAgent.SetDestination(target.position);
+            FaceTarget();
+        }
+
+        Action();
     }
 
     public void Action() {
@@ -87,4 +99,36 @@ public class Movement : MonoBehaviour
         }
     }
 
+    public void RemoveFocus()
+    {
+        if (player.focus != null)
+        {
+            player.focus.OnDefocused();
+        }
+
+        player.focus = null;
+        StopFollowingTarget();
+    }
+
+    public void FollowTarget (Interactable newTarget)
+    {
+        myAgent.stoppingDistance = newTarget.radius * .8f;
+        myAgent.updateRotation = false;
+        target = newTarget.interactionTransform;
+    }
+
+    public void StopFollowingTarget()
+    {
+        myAgent.stoppingDistance = 0f;
+        myAgent.updateRotation = true;
+        target = null;
+    }
+
+    public void FaceTarget()
+    {
+        Vector3 direction = (target.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+
+    }
 }

@@ -9,7 +9,6 @@ public class ChangeScene : MonoBehaviour
     public int scene;
     public string sceneName;
 
-    bool isBacking = false;
     //public VectorValue vectorvalue 
     private void Start()
     {
@@ -36,7 +35,6 @@ public class ChangeScene : MonoBehaviour
     {
         if (sceneName == "SecondScene" && scene == 0)
         {
-            isBacking = true;
             SceneManager.LoadScene(scene);
         }
         else if (sceneName == "FirstScene" && scene == 1)

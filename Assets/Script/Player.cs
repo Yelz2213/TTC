@@ -12,8 +12,12 @@ public class Player : MonoBehaviour
     public Vector3 currentPosition;
     public Vector3 scene_one_position;
 
+    public Interactable focus;
+
     public Camera startCam;
     public AudioListener startAudioListener;
+
+    public Movement movement;
 
     bool isFirstTime;
     void Start()
@@ -22,7 +26,37 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-
         currentPosition = this.transform.position;
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray myRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo;
+
+            if (Physics.Raycast(myRay, out hitInfo, 100))
+            {
+                Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
+                if(interactable != null)
+                {
+                    SetFocus(interactable);
+                }
+            }
+        }
     }
+
+    void SetFocus(Interactable newFocus)
+    {
+        if ( newFocus != focus)
+        {
+            if (focus != null)
+            {
+                focus.OnDefocused();
+            }
+            focus = newFocus;
+            movement.FollowTarget(newFocus);
+        }
+        newFocus.OnFocused(transform);
+        
+    }
+
+    
 }

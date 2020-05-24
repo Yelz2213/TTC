@@ -15,7 +15,7 @@ public class Dialog : MonoBehaviour
     private void Start()
     {
 
-        StartCoroutine(Type());
+        //StartCoroutine(Type());
     }
 
     private void Update()
