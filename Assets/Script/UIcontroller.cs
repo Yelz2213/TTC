@@ -15,14 +15,14 @@ public class UIcontroller : MonoBehaviour
         inventoryPanel.SetActive(false);
     }
 
-    public void openInventory()
+    public virtual void openInventory()
     {
         Debug.Log("clicking inventory button");
         inventoryPanel.SetActive(true);
         pauseGame();
     }
 
-    public void closeInventory()
+    public virtual void closeInventory()
     {
         inventoryPanel.SetActive(false);
         pauseGame();

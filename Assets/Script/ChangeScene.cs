@@ -5,15 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class ChangeScene : MonoBehaviour
 {
-    Player player;
     public int scene;
-    public string sceneName;
 
     //public VectorValue vectorvalue 
     private void Start()
     {
-        sceneName = SceneManager.GetActiveScene().name;
-
         /*
         sceneName = SceneManager.GetActiveScene().name;
         player = FindObjectOfType<Player>();
@@ -26,13 +22,11 @@ public class ChangeScene : MonoBehaviour
         */
     }
 
-    void OnTriggerEnter(Collider other)
+    public void changeScene(int scene)
     {
-        changeScene(sceneName, scene);
-    }
+        SceneManager.LoadScene(scene);
 
-    public void changeScene(string sceneName, int scene)
-    {
+        /*
         if (sceneName == "SecondScene" && scene == 0)
         {
             SceneManager.LoadScene(scene);
@@ -41,6 +35,7 @@ public class ChangeScene : MonoBehaviour
         {
             SceneManager.LoadScene(scene);
         }
+        */
 
         /*
         if(sceneName == "SecondScene" && scene == 0)
@@ -59,5 +54,10 @@ public class ChangeScene : MonoBehaviour
             SceneManager.LoadScene(scene);
         }
         */
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }
