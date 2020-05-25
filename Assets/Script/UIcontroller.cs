@@ -5,26 +5,30 @@ using UnityEngine.UI;
 
 public class UIcontroller : MonoBehaviour
 {
-    public GameObject Inventory;
+    public GameObject inventoryPanel;
+
     bool isPause = false;
     public Player player;
 
     private void Start()
     {
-
+        inventoryPanel.SetActive(false);
     }
 
     public void openInventory()
     {
-        Inventory.SetActive(true);
+        Debug.Log("clicking inventory button");
+        inventoryPanel.SetActive(true);
         pauseGame();
     }
 
     public void closeInventory()
     {
-        Inventory.SetActive(false);
+        inventoryPanel.SetActive(false);
         pauseGame();
     }
+
+
 
     public void pauseGame()
     {

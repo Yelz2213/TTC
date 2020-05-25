@@ -3,27 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Dialog : Interactable
+public class QASection : UIcontroller
 {
+    public GameObject qAPanel;
+    public GameObject readyButton;
+
     public TextMeshProUGUI textDisplay;
     public string[] sentences;
     public int index;
     public float typingSpeed;
-    public GameObject textbackground;
     public GameObject continueButton;
 
-    public override void Interact()
+    public void StartQA()
     {
-        //Debug.Log("Interacting");
-        base.Interact();
+        qAPanel.SetActive(true);
+        readyButton.SetActive(false);
         StartCoroutine(Type());
     }
 
     IEnumerator Type()
     {
-        textbackground.SetActive(true);
+        continueButton.SetActive(true);
         textDisplay.enabled = true;
-        foreach (char letter in sentences[index].ToCharArray()) {
+        foreach (char letter in sentences[index].ToCharArray())
+        {
             textDisplay.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
@@ -41,8 +44,12 @@ public class Dialog : Interactable
         {
             textDisplay.text = "";
             continueButton.SetActive(false);
-            textbackground.SetActive(false);
+            player.isInteracting = false;
         }
     }
+
+    void LastQuestion()
+    {
+        
+    }
 }
-   
