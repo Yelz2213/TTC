@@ -7,7 +7,7 @@ public class UIcontroller : MonoBehaviour
 {
     public GameObject inventoryPanel;
 
-    bool isPause = false;
+    public bool isPause = false;
     public Player player;
 
     private void Start()

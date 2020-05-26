@@ -12,6 +12,7 @@ public class Interactable : MonoBehaviour
     Transform player;
 
     public Dialog dialog = null;
+    public CheckBaggage checkBaggage = null;
 
     public virtual void Interact()
     {
@@ -45,6 +46,7 @@ public class Interactable : MonoBehaviour
                 if (gameObject.tag != "RoadBlock")
                 {
                     dialog.continueButton.SetActive(true);
+                    checkBaggage.continueButton.SetActive(true);
                 }
                 else if (gameObject.tag == "RoadBlock")
                 {

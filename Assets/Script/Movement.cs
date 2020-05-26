@@ -19,6 +19,8 @@ public class Movement : MonoBehaviour
     public Player player;
 
     AudioSource walk;
+
+    public UIcontroller uIcontroller;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +47,10 @@ public class Movement : MonoBehaviour
                 {
                     //Debug.Log(hitInfo.point);
                     myAgent.SetDestination(hitInfo.point);
+                }
+                if (uIcontroller.isPause = true)
+                {
+                    uIcontroller.pauseGame();
                 }
                 RemoveFocus();
             }
