@@ -11,7 +11,7 @@ public class Interactable : MonoBehaviour
     bool isInteracting;
     Transform player;
 
-    public Dialog dialog;
+    public Dialog dialog = null;
 
     public virtual void Interact()
     {
@@ -38,9 +38,24 @@ public class Interactable : MonoBehaviour
             }
         }
 
-        if (dialog.textDisplay.text == dialog.sentences[dialog.index])
+        if (dialog != null)
         {
-            dialog.continueButton.SetActive(true);
+            if (dialog.textDisplay.text == dialog.sentences[dialog.index])
+            {
+                if (gameObject.tag != "RoadBlock")
+                {
+                    dialog.continueButton.SetActive(true);
+                }
+                else if (gameObject.tag == "RoadBlock")
+                {
+                    dialog.continueButton.SetActive(true);
+                    if (dialog.index == 1)
+                    {
+                        dialog.continueButton.SetActive(false);
+                        Debug.Log("RoadBlock");
+                    }
+                }
+            }
         }
     }
 

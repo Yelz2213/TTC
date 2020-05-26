@@ -11,6 +11,8 @@ public class Dialog : Interactable
     public float typingSpeed;
     public GameObject textbackground;
     public GameObject continueButton;
+    public GameObject nextStageButton = null;
+    public GameObject inventoryButton = null;
 
     public override void Interact()
     {
@@ -37,11 +39,24 @@ public class Dialog : Interactable
             index++;
             textDisplay.text = "";
             StartCoroutine(Type());
+
+            Debug.Log(index);
+            if (index == 1)
+            {
+                if (gameObject.tag == "RoadBlock")
+                {
+                    continueButton.SetActive(false);
+                    nextStageButton.SetActive(true);
+                    inventoryButton.SetActive(true);
+                    Debug.Log("RoadBlock");
+                }
+            }
         } else
         {
             textDisplay.text = "";
             continueButton.SetActive(false);
             textbackground.SetActive(false);
+
         }
     }
 }

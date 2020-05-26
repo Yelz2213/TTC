@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class QASection : UIcontroller
@@ -8,8 +9,12 @@ public class QASection : UIcontroller
     public GameObject qAPanel,
                       readyButton,
                       reviewButton,
+                      nextStage,
                       dialogPanel,
                       title;
+
+    public RectTransform answerButton,
+                         answer_wButton;
 
 
     public TextMeshProUGUI textDisplay,
@@ -23,13 +28,16 @@ public class QASection : UIcontroller
                     dialog_c;
 
     private int index, 
-                index_c;
+                index_c,
+                random;
 
     public float typingSpeed;
     public GameObject continueButton;
+    bool isSwitched = false;
 
     public void StartQA()
     {
+        Debug.Log(answerButton.anchoredPosition);
         title.SetActive(false);
         qAPanel.SetActive(true);
         readyButton.SetActive(false);
@@ -76,6 +84,13 @@ public class QASection : UIcontroller
 
     public void NextSentence()
     {
+        random = Random.Range(0, 3);
+        if(random >= 1)
+        {
+            Debug.Log("Switched");
+            ChangePosition();
+        }
+        
         continueButton.SetActive(false);
         if (index < sentences.Length - 1)
         {
@@ -106,6 +121,7 @@ public class QASection : UIcontroller
         readyButton.SetActive(false);
         reviewButton.SetActive(false);
         continueButton.SetActive(false);
+        title.SetActive(false);
     }
 
     public override void closeInventory()
@@ -115,10 +131,25 @@ public class QASection : UIcontroller
         readyButton.SetActive(true);
         reviewButton.SetActive(true);
         continueButton.SetActive(true);
+        title.SetActive(true);
     }
 
-    void LastQuestion()
-    {
-        
+    public void ChangePosition() {
+        Vector3 pos1 = new Vector3((float)-174.6, 0, 0);
+        Vector3 pos2 = new Vector3((float)172, 0, 0);
+
+        if (!isSwitched)
+        {
+            Debug.Log("Switch1");
+            isSwitched = true;
+            answerButton.anchoredPosition = pos2;
+            answer_wButton.anchoredPosition = pos1;
+        } else if (isSwitched)
+        {
+            Debug.Log("Switch2");
+            isSwitched = false;
+            answerButton.anchoredPosition = pos1;
+            answer_wButton.anchoredPosition = pos2;
+        }
     }
 }
