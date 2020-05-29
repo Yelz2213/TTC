@@ -6,6 +6,8 @@ TagManager:
   tags:
   - RoadBlock
   - Baggage
+  - CorrectBaggage
+  - Immigration
   layers:
   - Default
   - TransparentFX

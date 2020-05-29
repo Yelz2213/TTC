@@ -6,6 +6,7 @@ using TMPro;
 public class CheckBaggage : Interactable
 {
     public UIcontroller uIcontroller;
+    public Inventory inventory;
     public TextMeshProUGUI textDisplay;
     private string[] sentences;
     private int index;
@@ -22,13 +23,23 @@ public class CheckBaggage : Interactable
     public override void Interact()
     {
         base.Interact();
-        Debug.Log("Interacting");
+
+        if (gameObject.tag == "CorrectBaggage")
+        {
+            sentences[0] = "Found it";
+        }
+        else
+        {
+            sentences[0] = "Not this one.";
+        }
+
         StartCoroutine(Type());
         uIcontroller.pauseGame();
     }
 
     IEnumerator Type()
     {
+
         continueButton.SetActive(true);
         textbackground.SetActive(true);
         textDisplay.enabled = true;
@@ -36,6 +47,12 @@ public class CheckBaggage : Interactable
         {
             textDisplay.text += letter;
             yield return new WaitForSeconds(typingSpeed);
+        }
+
+        if (gameObject.tag == "CorrectBaggage")
+        {
+            Destroy(this.gameObject);
+            inventory.baggage.SetActive(true);
         }
     }
 
@@ -54,6 +71,7 @@ public class CheckBaggage : Interactable
             index = 0;
             continueButton.SetActive(false);
             textbackground.SetActive(false);
+            uIcontroller.pauseGame();
         }
     }
 }

@@ -13,6 +13,7 @@ public class Interactable : MonoBehaviour
 
     public Dialog dialog = null;
     public CheckBaggage checkBaggage = null;
+    public Immigration immigration = null;
 
     public virtual void Interact()
     {
@@ -46,7 +47,15 @@ public class Interactable : MonoBehaviour
                 if (gameObject.tag != "RoadBlock")
                 {
                     dialog.continueButton.SetActive(true);
-                    checkBaggage.continueButton.SetActive(true);
+                    //checkBaggage.continueButton.SetActive(true);
+
+                    Debug.Log(immigration.gameObject.tag);
+                    //if (immigration.gameObject.tag == ("Immigration"))
+                    //{
+                    //    immigration.continueButton.SetActive(true);
+                    //    immigration.continueButton2.SetActive(true);
+                    //}
+
                 }
                 else if (gameObject.tag == "RoadBlock")
                 {

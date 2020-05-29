@@ -11,22 +11,16 @@ public class Movement : MonoBehaviour
     public Transform target;
 
     public Animator m_Animator;
-    bool isWalk;
-    bool isIdle;
-    bool isRunning;
+
     bool isPlaying;
 
     public Player player;
 
     AudioSource walk;
 
-    public UIcontroller uIcontroller;
     // Start is called before the first frame update
     void Start()
     {
-        isWalk = false;
-        isIdle = true;
-        isRunning = false;
 
         myAgent = GetComponent<NavMeshAgent>();
         m_Animator = gameObject.GetComponent<Animator>();
@@ -48,10 +42,6 @@ public class Movement : MonoBehaviour
                     //Debug.Log(hitInfo.point);
                     myAgent.SetDestination(hitInfo.point);
                 }
-                if (uIcontroller.isPause = true)
-                {
-                    uIcontroller.pauseGame();
-                }
                 RemoveFocus();
             }
         }
@@ -69,9 +59,7 @@ public class Movement : MonoBehaviour
     public void Action() {
         if (myAgent.velocity != Vector3.zero)
         {
-            isWalk = true;
-            isRunning = false;
-            isIdle = false;
+
 
             m_Animator.ResetTrigger("isIdle");
             m_Animator.ResetTrigger("isRunning");
@@ -84,9 +72,7 @@ public class Movement : MonoBehaviour
 
             if (myAgent.remainingDistance >= 8)
             {
-                isWalk = false;
-                isRunning = true;
-                isIdle = false;
+
                 myAgent.speed = 4;
                 m_Animator.ResetTrigger("isIdle");
                 m_Animator.ResetTrigger("isWalk");
@@ -100,9 +86,7 @@ public class Movement : MonoBehaviour
         {
             walk.Stop();
             isPlaying = false;
-            isWalk = false;
-            isRunning = false;
-            isIdle = true;
+
             m_Animator.ResetTrigger("isWalk");
             m_Animator.ResetTrigger("isRunning");
             m_Animator.SetTrigger("isIdle");

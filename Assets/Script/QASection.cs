@@ -50,6 +50,7 @@ public class QASection : UIcontroller
     IEnumerator Type()
     {
         continueButton.SetActive(true);
+        //typing question contents
         textDisplay.enabled = true;
         foreach (char letter in sentences[index].ToCharArray())
         {
@@ -57,6 +58,7 @@ public class QASection : UIcontroller
             yield return new WaitForSeconds(typingSpeed);
         }
 
+        //typing correct answer contents
         answerDisplay.enabled = true;
         foreach (char letter in answer[index].ToCharArray())
         {
@@ -64,6 +66,7 @@ public class QASection : UIcontroller
             yield return new WaitForSeconds(typingSpeed);
         }
 
+        //typing Wrong answer contents
         answer_wDisplay.enabled = true;
         foreach (char letter in answer_w[index].ToCharArray())
         {
@@ -74,6 +77,7 @@ public class QASection : UIcontroller
 
     IEnumerator TypeDialog()
     {
+        //typing hints
         foreach (char letter in dialog_c[index_c].ToCharArray())
         {
             dialog_Cloud.text += letter;
@@ -106,6 +110,7 @@ public class QASection : UIcontroller
         {
             dialogPanel.SetActive(true);
             qAPanel.SetActive(false);
+            nextStage.SetActive(true);
             textDisplay.text = "";
             answerDisplay.text = "";
             answer_wDisplay.text = "";

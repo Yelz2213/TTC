@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
 
     public Movement movement;
     public bool isInteracting = false;
+    public bool isChangedOutfit;
+    public bool istaken;
     
     void Start()
     {

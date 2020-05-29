@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class ChangeScene : MonoBehaviour
 {
     public int scene;
+    public Animator transition;
+    public float transitionTime = 1f;
 
     //public VectorValue vectorvalue 
     private void Start()
@@ -24,7 +26,7 @@ public class ChangeScene : MonoBehaviour
 
     public void changeScene(int scene)
     {
-        SceneManager.LoadScene(scene);
+        StartCoroutine(LoadLevel(scene));
 
         /*
         if (sceneName == "SecondScene" && scene == 0)
@@ -54,6 +56,15 @@ public class ChangeScene : MonoBehaviour
             SceneManager.LoadScene(scene);
         }
         */
+    }
+
+    IEnumerator LoadLevel(int Scene)
+    {
+        transition.SetTrigger("Start");
+
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.LoadScene(scene);
     }
 
     public void ExitGame()
